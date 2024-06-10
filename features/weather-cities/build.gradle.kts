@@ -56,6 +56,8 @@ dependencies {
     ksp(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt.navigation)
 
+    implementation(libs.kotlinx.uuid)
+
     implementation(project(":weather-data"))
     implementation(project(":features:weather-theme"))
 }

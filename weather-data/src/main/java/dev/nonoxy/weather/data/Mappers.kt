@@ -13,8 +13,8 @@ internal fun CityDTO.toCity(): City {
     return City(
         id = id,
         city = city,
-        latitude = latitude,
-        longitude = longitude,
+        latitude = latitude.toFloat(),
+        longitude = longitude.toFloat(),
     )
 }
 
