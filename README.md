@@ -17,6 +17,7 @@ WEATHER_API_KEY=api_key_here
 - [KotlinX Serialization](https://github.com/Kotlin/kotlinx.serialization)
 - [Retrofit](https://square.github.io/retrofit/) + [OkHttp](https://square.github.io/okhttp/)
 - [Jetpack Compose](https://developer.android.com/develop/ui/compose)
+- [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation)
 - [Hilt](https://dagger.dev/hilt/)
 - [MD3 Compose](https://developer.android.com/develop/ui/compose/designsystems/material3)
 
