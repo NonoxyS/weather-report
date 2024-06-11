@@ -8,7 +8,6 @@ import dev.nonoxy.weather.data.map
 import dev.nonoxy.weather.data.models.City
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.uuid.UUID
 import javax.inject.Inject
 
 class GetCitiesUseCase @Inject constructor(
@@ -23,8 +22,8 @@ class GetCitiesUseCase @Inject constructor(
 
     private fun City.toCityUI(): CityUI {
         return CityUI(
-            id = id.ifEmpty { UUID().toString() }, // TODO Перенести в слой данных
-            cityName = city.ifEmpty { "Пустой город" }, // TODO Перенести в слой данных
+            id = id,
+            cityName = city,
             coordinates = CoordinatesUI(
                 latitude = latitude,
                 longitude = longitude

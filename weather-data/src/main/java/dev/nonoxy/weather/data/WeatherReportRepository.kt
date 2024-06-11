@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import java.util.UUID
 import javax.inject.Inject
 
 class WeatherReportRepository @Inject constructor(
@@ -22,7 +23,17 @@ class WeatherReportRepository @Inject constructor(
             .map { result ->
                 result.toRequestResult()
                     .map { cities ->
-                        cities.map { it.toCity() }
+                        // Считаю, что АПИ должно отдавать полные данные,
+                        // поэтому города с пустым названием - просто не передаю дальше.
+                        // Да, это может ухудшить пользовательский опыт, но, я считаю, что эта
+                        // проблема должна решаться на стороне бэкенда
+                        // Айди - далее использую только в качестве ключа для LazyColumn
+                        // поэтому генерирую UUID
+                        cities.filter { city ->
+                            city.city.isNotBlank()
+                        }.map { city ->
+                            city.copy(id = city.id.ifBlank { generateUUID() }).toCity()
+                        }
                     }
             }.flowOn(Dispatchers.Default)
 
@@ -46,5 +57,9 @@ class WeatherReportRepository @Inject constructor(
         val start = flowOf<RequestResult<Weather>>(RequestResult.InProgress())
 
         return merge(apiRequest, start)
+    }
+
+    private fun generateUUID(): String {
+        return UUID.randomUUID().toString()
     }
 }
