@@ -32,27 +32,21 @@ class WeatherReportViewModel @Inject constructor(
                 latitude = city.coordinates.latitude.toString(),
                 longitude = city.coordinates.longitude.toString()
             )
-                .map { it.toWeatherReportViewState(cityName = city.cityName) }
+                .map { it.toWeatherReportViewState(city = city) }
                 .collect { newState ->
                     viewState = newState
                 }
         }
     }
 
-    private fun RequestResult<WeatherUI>.toWeatherReportViewState(cityName: String): WeatherReportViewState {
+    private fun RequestResult<WeatherUI>.toWeatherReportViewState(city: CityUI): WeatherReportViewState {
         return when (this) {
-            is RequestResult.Error -> WeatherReportViewState.Error(
-                city = CityUI(
-                    cityName = cityName,
-                    coordinates = data!!.coordinates
-                )
-            )
-
+            is RequestResult.Error -> WeatherReportViewState.Error(city = city)
             is RequestResult.InProgress -> WeatherReportViewState.Loading
             is RequestResult.Success -> {
                 WeatherReportViewState.Display(
                     temperature = data.mainInfo.temperature.roundToInt().toByte(),
-                    cityName = cityName,
+                    cityName = city.cityName,
                     coordinates = data.coordinates
                 )
             }
